@@ -13,7 +13,7 @@ struct SplashScreen: View {
     
     var body: some View {
         if isActive {
-            MainView() // Navigate to your main screen
+            CustomTabView() // Navigate to your main screen
         } else {
             ZStack {
                 Color.white.ignoresSafeArea() // Background color
