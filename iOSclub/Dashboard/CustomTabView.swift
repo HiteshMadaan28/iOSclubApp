@@ -37,7 +37,8 @@ struct CustomTabView: View {
                 .tag(Tab.connections)
 
             // Jobs Tab
-            JobsView()
+//            JobsView()
+            CoursesView()
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab == .jobs ? "briefcase.fill" : "briefcase")
