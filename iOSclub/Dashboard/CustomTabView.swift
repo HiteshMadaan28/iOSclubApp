@@ -27,7 +27,7 @@ struct CustomTabView: View {
                 .tag(Tab.home)
 
             // Connections Tab
-            ConnectionsView()
+            ConnectionContentView()
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab == .connections ? "person.3.fill" : "person.3")
@@ -48,7 +48,7 @@ struct CustomTabView: View {
                 .tag(Tab.jobs)
 
             // News Tab
-            NewsView()
+            NewsContentView()
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab == .news ? "newspaper.fill" : "newspaper")
