@@ -8,145 +8,56 @@
 import SwiftUI
 
 struct SocialMediaHomeStoryView: View {
+    var stories: [Story]  // Accept the stories data
+    
     var body: some View {
-        ScrollView(.horizontal){
-            
-            HStack(spacing:0){
+        ScrollView(.horizontal) {
+            HStack(spacing: 0) {
                 
-                VStack(spacing:0){
+                VStack(spacing: 0){
                     Image("StorySelector")
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("You")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
-                }
-                .padding(.leading,24)
-                
-                
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.red.opacity(0.4))
                         .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
+                        .padding(.top, 18)
+                        .padding(.bottom, 10)
                     
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Sally")
+                    Text("You")
                         .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
+                        .foregroundStyle(Color(hex: "#323842"))
+                        .padding(.bottom, 18)
                 }
-                .padding(.leading,18)
                 
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.blue.opacity(0.4))
-                        .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Jason")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
+                
+                ForEach(stories, id: \.userName) { story in
+                    VStack(spacing: 0) {
+                        Circle()
+                            .fill(story.backgroundColor.opacity(0.4))
+                            .frame(width: 44)
+                            .padding(.top, 18)
+                            .padding(.bottom, 10)
                         
+                        HStack(alignment: .center, spacing: 0) {
+                            Text(story.userName)
+                                .font(.custom("Inter", size: 14))
+                                .foregroundStyle(Color(hex: "#323842"))
+                                .padding(.bottom, 18)
+                        }
                     }
+                    .padding(.leading, 18)
                 }
-                .padding(.leading,18)
-                
-                
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.green.opacity(0.4))
-                        .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Jena")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
-                }
-                .padding(.leading,18)
-                
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.yellow.opacity(0.4))
-                        .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Michale")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
-                }
-                .padding(.leading,18)
-                
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.pink.opacity(0.4))
-                        .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Lary")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
-                }
-                .padding(.leading,18)
-                
-                VStack(spacing: 0){
-                    Circle()
-                        .fill(Color.red.opacity(0.4))
-                        .frame(width: 44)
-                        .padding(.top,18)
-                        .padding(.bottom,10)
-                    
-                    HStack(alignment:.center,spacing: 0){
-
-                        Text("Sally")
-                        .font(.custom("Inter", size: 14))
-                        .foregroundStyle(Color(hex:"#323842"))
-                        .padding(.bottom,18)
-                        
-                    }
-                }
-                .padding([.leading,.trailing],18)
-                
-                
-                
             }
+            .padding(.leading, 18)
         }
         .scrollIndicators(.hidden)
     }
 }
 
 #Preview {
-    SocialMediaHomeStoryView()
+    SocialMediaHomeStoryView(stories: [
+        Story(userName: "Sally", backgroundColor: .red),
+        Story(userName: "Jason", backgroundColor: .blue),
+        Story(userName: "Jena", backgroundColor: .green),
+        Story(userName: "Michale", backgroundColor: .yellow),
+        Story(userName: "Lary", backgroundColor: .pink),
+        Story(userName: "Sally", backgroundColor: .red)
+    ])
 }

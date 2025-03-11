@@ -12,7 +12,7 @@ struct CustomTabView: View {
 
     var body: some View {
         ZStack {
-            // Main Views
+            // MARK: - Main Views
             Group {
                 switch coordinator.selectedTab {
                 case .home:
@@ -25,43 +25,82 @@ struct CustomTabView: View {
                     SocialMediaHomeContentView()
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
 
-            // Custom Floating Tab Bar
+            // MARK: - Custom Floating Tab Bar
             VStack {
                 Spacer()
-                HStack {
-                    ForEach(AppCoordinator.Tab.allCases, id: \.self) { tab in
-                        Button(action: {
+                FloatingTabBar(
+                    selectedTab: coordinator.selectedTab,
+                    tabs: AppCoordinator.Tab.allCases,
+                    onTabSelected: { tab in
+                        withAnimation(.spring()) {
                             coordinator.selectTab(tab)
-                        }) {
-                            VStack(spacing: 6) {
-                                Image(systemName: coordinator.selectedTab == tab ? tab.selectedIcon : tab.rawValue)
-                                    .font(.system(size: 20, weight: .semibold))
-                                    .foregroundColor(coordinator.selectedTab == tab ? Color(hex: "#007AFF") : .gray)
-
-                                Text(tab.title)
-                                    .font(.caption)
-                                    .foregroundColor(coordinator.selectedTab == tab ? Color(hex: "#007AFF") : .gray)
-                            }
-                            .frame(maxWidth: .infinity)
                         }
                     }
-                }
-                .padding(.vertical, 14)
-                .padding(.horizontal, 24)
-                .background(
-                    Color.white
-                        .cornerRadius(24)
-                        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
                 )
-                .padding(.horizontal, 32)
                 .padding(.bottom, 20)
             }
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+}
+
+struct FloatingTabBar: View {
+    var selectedTab: AppCoordinator.Tab
+    var tabs: [AppCoordinator.Tab]
+    var onTabSelected: (AppCoordinator.Tab) -> Void
+
+    var body: some View {
+        HStack {
+            ForEach(tabs, id: \.self) { tab in
+                TabBarItemView(
+                    tab: tab,
+                    isSelected: selectedTab == tab,
+                    onTap: {
+                        onTabSelected(tab)
+                    }
+                )
+            }
+        }
+        .padding(.vertical, 14)
+        .padding(.horizontal, 24)
+        .background(
+            Color.white
+                .cornerRadius(24)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+        .padding(.horizontal, 32)
+    }
+}
+
+struct TabBarItemView: View {
+    let tab: AppCoordinator.Tab
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: {
+            onTap()
+        }) {
+            VStack(spacing: 6) {
+                Image(systemName: isSelected ? tab.selectedIcon : tab.rawValue)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(isSelected ? Color(hex: "#007AFF") : .gray)
+                    .scaleEffect(isSelected ? 1.2 : 1.0)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isSelected)
+
+                Text(tab.title)
+                    .font(.caption)
+                    .foregroundColor(isSelected ? Color(hex: "#007AFF") : .gray)
+            }
+            .frame(maxWidth: .infinity)
         }
     }
 }
 
+// MARK: - Example Content Views
 
 struct JobsView: View {
     var body: some View {
@@ -71,8 +110,9 @@ struct JobsView: View {
     }
 }
 
-struct CustomTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomTabView()
-    }
+// MARK: - Preview
+
+#Preview {
+    CustomTabView()
+        .environmentObject(AppCoordinator())
 }
