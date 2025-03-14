@@ -10,6 +10,7 @@ import SwiftUI
 struct SocialMediaProfileView: View {
     
     @State private var selectedTab: Tab = .posts
+    @State private var isSearchPresented = false  // New state variable to present the search view
     
     enum Tab {
         case posts
@@ -32,8 +33,12 @@ struct SocialMediaProfileView: View {
             
             Spacer()
             
+            // Search icon now triggers the sheet presentation
             Image("Search")
                 .padding(.trailing, 14)
+                .onTapGesture {
+                    isSearchPresented.toggle()  // Toggle search presentation
+                }
         }
         
         ScrollView {
@@ -182,8 +187,18 @@ struct SocialMediaProfileView: View {
             }
         }
         .scrollIndicators(.hidden)
+        .sheet(isPresented: $isSearchPresented) {
+            SearchProfilesView()  // Present the search view in the sheet
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(21)
+                .padding(.top)
+                .ignoresSafeArea()
+               
+        }
     }
 }
+
 
 #Preview {
     SocialMediaProfileView()
