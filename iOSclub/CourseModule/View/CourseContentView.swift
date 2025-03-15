@@ -14,7 +14,6 @@ struct CourseContentView: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationView {
             VStack(spacing: 0) {
                 // Header
                 HStack {
@@ -81,10 +80,10 @@ struct CourseContentView: View {
             }
             .background(Color.white.edgesIgnoringSafeArea(.all))
             .onAppear {
+                print("On Appear is working")
                 viewModel.fetchCourses()
             }
         }
-    }
 }
 
 

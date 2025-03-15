@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomTabView: View {
     @EnvironmentObject var coordinator: AppCoordinator
+    @State private var refreshKey = UUID() // Add a refresh key to force re-render
 
     var body: some View {
         ZStack {
@@ -17,12 +18,16 @@ struct CustomTabView: View {
                 switch coordinator.selectedTab {
                 case .home:
                     DashboardView()
+                        .id(refreshKey) // Apply the unique key to force refresh
                 case .courses:
                     CourseContentView()
+                        .id(refreshKey) // Apply the unique key to force refresh
                 case .news:
                     NewsContentView()
+                        .id(refreshKey) // Apply the unique key to force refresh
                 case .socialMedia:
                     SocialMediaHomeContentView()
+                        .id(refreshKey) // Apply the unique key to force refresh
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -37,6 +42,8 @@ struct CustomTabView: View {
                     onTabSelected: { tab in
                         withAnimation(.spring()) {
                             coordinator.selectTab(tab)
+                            // Update the refresh key to force re-render
+                            refreshKey = UUID()
                         }
                     }
                 )
@@ -46,6 +53,7 @@ struct CustomTabView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
+
 
 struct FloatingTabBar: View {
     var selectedTab: AppCoordinator.Tab

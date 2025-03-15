@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct SplashScreen: View {
+    @StateObject private var coordinator = AppCoordinator()
     @State private var isActive = false // For navigation to the main screen
     @State private var gradientFill: CGFloat = 0 // Gradient progress
     
+    
     var body: some View {
         if isActive {
-            CustomTabView() // Navigate to your main screen
+            coordinator.start()
         } else {
             ZStack {
                 Color.white.ignoresSafeArea() // Background color
