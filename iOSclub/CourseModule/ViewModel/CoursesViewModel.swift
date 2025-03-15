@@ -4,13 +4,6 @@
 //
 //  Created by Hitesh Madaan on 13/03/25.
 //
-//
-//  CoursesViewModel.swift
-//  iOSclub
-//
-//  Created by Hitesh Madaan on 13/03/25.
-//
-
 import Foundation
 import Combine
 

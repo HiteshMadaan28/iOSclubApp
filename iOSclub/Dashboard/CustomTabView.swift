@@ -97,6 +97,7 @@ struct TabBarItemView: View {
             }
             .frame(maxWidth: .infinity)
         }
+        .disabled(isSelected)
     }
 }
 
