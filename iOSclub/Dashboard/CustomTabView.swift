@@ -17,8 +17,8 @@ struct CustomTabView: View {
                 switch coordinator.selectedTab {
                 case .home:
                     DashboardView()
-                case .jobs:
-                    JobsView()
+                case .courses:
+                    CourseContentView()
                 case .news:
                     NewsContentView()
                 case .socialMedia:

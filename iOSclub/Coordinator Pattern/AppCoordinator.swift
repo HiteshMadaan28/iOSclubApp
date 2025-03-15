@@ -16,14 +16,14 @@ final class AppCoordinator: Coordinator, ObservableObject {
     // MARK: - Tab Enum (same as in CustomTabView)
     enum Tab: String, CaseIterable {
         case home = "house"
-        case jobs = "briefcase"
+        case courses = "folder"
         case news = "newspaper"
         case socialMedia = "person.3"
         
         var title: String {
             switch self {
             case .home: return "Home"
-            case .jobs: return "Jobs"
+            case .courses: return "Courses"
             case .news: return "News"
             case .socialMedia: return "Connect"
             }
@@ -32,7 +32,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
         var selectedIcon: String {
             switch self {
             case .home: return "house.fill"
-            case .jobs: return "briefcase.fill"
+            case .courses: return "folder.fill"
             case .news: return "newspaper.fill"
             case .socialMedia: return "person.3.fill"
             }
