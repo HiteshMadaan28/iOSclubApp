@@ -11,7 +11,8 @@ import SwiftUI
 struct CourseContentView: View {
     // MARK: - Properties
     @ObservedObject var viewModel = CoursesViewModel()
-    
+    @State private var searchText: String = ""
+
     // MARK: - Body
     var body: some View {
         NavigationStack{
@@ -24,7 +25,7 @@ struct CourseContentView: View {
                         .foregroundColor(Color(hex: "#111517"))
                         .frame(maxWidth: .infinity)
                     Button(action: {
-                        // Search button action
+                        // Future search functionality
                     }) {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(Color(hex: "#111517"))
@@ -41,8 +42,7 @@ struct CourseContentView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(Color(hex: "#647987"))
                         .padding(.leading, 8)
-                        .background(Color(hex: "#f0f3f4"))
-                    TextField("Search courses", text: .constant(""))
+                    TextField("Search courses", text: $searchText)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 10)
                         .background(Color(hex: "#f0f3f4"))
@@ -51,38 +51,59 @@ struct CourseContentView: View {
                 }
                 .background(Color(hex: "#f0f3f4"))
                 .cornerRadius(12)
-                .padding(.horizontal,16)
-                
-                // Course Cards
+                .padding(.horizontal, 16)
+
+                // Course Cards List with Pull-to-Refresh
                 ScrollView {
-                    VStack(spacing: 0) {
-                        // Display Courses Dynamically
-                        ForEach(viewModel.courses) { course in
+                    LazyVStack(spacing: 0) {
+                        // Filtered Courses if search text is active
+                        ForEach(filteredCourses(), id: \.id) { course in
                             NavigationLink(destination: CourseDetailView(course: course)) {
-                                Course_Card(imageURL: course.image_url, title: course.title, description: course.short_description)
+                                Course_Card(
+                                    imageURL: course.image_url,
+                                    title: course.title,
+                                    description: course.short_description
+                                )
                             }
                         }
-                        
-                        // Show Loading Spinner if Data is Being Fetched
+
+                        // Loading spinner
                         if viewModel.isLoading {
                             ProgressView("Loading...")
                                 .progressViewStyle(CircularProgressViewStyle())
                                 .padding()
                         }
-                        
-                        // Show Error Message if Any
+
+                        // Error message display
                         if let errorMessage = viewModel.errorMessage {
                             Text(errorMessage)
                                 .foregroundColor(.red)
                                 .padding()
                         }
                     }
+                    .padding(.top, 8)
+                }
+                .refreshable {
+                    print("Manual refresh triggered!")
+                    viewModel.fetchCourses(forceRefresh: true)
                 }
             }
             .background(Color.white.edgesIgnoringSafeArea(.all))
             .onAppear {
-                print("On Appear is working")
-                viewModel.fetchCourses()
+                print("OnAppear triggered!")
+                viewModel.fetchCourses(forceRefresh: false)
+            }
+        }
+    }
+
+    // MARK: - Filtered Courses based on search text
+    private func filteredCourses() -> [Course] {
+        if searchText.isEmpty {
+            return viewModel.courses
+        } else {
+            return viewModel.courses.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText) ||
+                $0.short_description.localizedCaseInsensitiveContains(searchText)
             }
         }
     }

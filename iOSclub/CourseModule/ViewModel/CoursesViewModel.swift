@@ -13,12 +13,26 @@ class CoursesViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Cache
+    private static var cachedCourses: [Course]? // Static to share cache across instances
+    private var hasFetchedOnce: Bool {
+        return Self.cachedCourses != nil
+    }
 
     // MARK: - Constants
     private let baseURL = "https://jgjldpbanbvqmjzcndit.supabase.co/rest/v1/courses"
     private let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnamxkcGJhbmJ2cW1qemNuZGl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MTg3NjEsImV4cCI6MjA1NDk5NDc2MX0.tLZ_9mQUOxeZAPuSLPml3lR3CNsOm_yDkGmN2y9rSME"
+    
     // MARK: - Public API
-    func fetchCourses() {
+    func fetchCourses(forceRefresh: Bool = false) {
+        //1. Return cached data if available and no force refresh is requested
+        if !forceRefresh, let cachedCourses = Self.cachedCourses {
+            print("[CACHE] Returning cached courses: \(cachedCourses.count)")
+            self.courses = cachedCourses
+            return
+        }
+
         guard let url = URL(string: baseURL) else {
             self.errorMessage = "Invalid URL."
             return
@@ -31,6 +45,8 @@ class CoursesViewModel: ObservableObject {
 
         isLoading = true
         errorMessage = nil
+        
+        print("[API] Fetching courses from API...")
 
         URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
@@ -61,6 +77,10 @@ class CoursesViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] courses in
                 self?.courses = courses
+                
+                //2. Cache the result after successful fetch
+                Self.cachedCourses = courses
+                
                 print("[DEBUG] Courses received: \(courses.count)")
             }
             .store(in: &cancellables)
