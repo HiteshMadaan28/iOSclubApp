@@ -11,9 +11,10 @@ import SwiftUI
 struct CourseContentView: View {
     // MARK: - Properties
     @ObservedObject var viewModel = CoursesViewModel()
-
+    
     // MARK: - Body
     var body: some View {
+        NavigationStack{
             VStack(spacing: 0) {
                 // Header
                 HStack {
@@ -51,7 +52,7 @@ struct CourseContentView: View {
                 .background(Color(hex: "#f0f3f4"))
                 .cornerRadius(12)
                 .padding(.horizontal,16)
-
+                
                 // Course Cards
                 ScrollView {
                     VStack(spacing: 0) {
@@ -68,7 +69,7 @@ struct CourseContentView: View {
                                 .progressViewStyle(CircularProgressViewStyle())
                                 .padding()
                         }
-
+                        
                         // Show Error Message if Any
                         if let errorMessage = viewModel.errorMessage {
                             Text(errorMessage)
@@ -84,6 +85,7 @@ struct CourseContentView: View {
                 viewModel.fetchCourses()
             }
         }
+    }
 }
 
 
@@ -91,7 +93,7 @@ struct Course_Card: View {
     var imageURL: String
     var title: String
     var description: String
-
+    
     var body: some View {
         VStack(alignment:.leading,spacing:0){
             // Course Image
@@ -104,13 +106,13 @@ struct Course_Card: View {
             }
             .frame(height: 200)
             .cornerRadius(8)
-
+            
             // Course Title and Description
             Text(title)
                 .font(.headline)
                 .foregroundColor(Color(hex: "#111517"))
                 .padding(.top, 16)
-
+            
             Text(description)
                 .font(.subheadline)
                 .foregroundColor(Color(hex: "#647987"))
