@@ -12,22 +12,24 @@ struct SocialMediaHomeContentView: View {
     @State private var posts: [SocialMediaPost] = demoPosts  // Use demoPosts
     
     var body: some View {
-        VStack {
-            SocialMediaHomeHeaderView()
-            
-            ScrollView {
-                VStack {
-                    // Pass demo data to SocialMediaHomeStoryView
-                    SocialMediaHomeStoryView(stories: stories)
-                    
-                    // Pass demo data to SocialMediaHomePostView
-                    ForEach(posts, id: \.userName) { post in
-                        SocialMediaHomePostView(post: post)
+        NavigationStack{
+            VStack {
+                SocialMediaHomeHeaderView()
+                
+                ScrollView {
+                    VStack {
+                        // Pass demo data to SocialMediaHomeStoryView
+                        SocialMediaHomeStoryView(stories: stories)
+                        
+                        // Pass demo data to SocialMediaHomePostView
+                        ForEach(posts, id: \.userName) { post in
+                            SocialMediaHomePostView(post: post)
+                        }
                     }
                 }
+                .scrollIndicators(.hidden)
+                .background(Color(hex: "F8F9FA"))
             }
-            .scrollIndicators(.hidden)
-            .background(Color(hex: "F8F9FA"))
         }
     }
 }
