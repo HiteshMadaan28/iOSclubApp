@@ -19,18 +19,12 @@ struct CourseContentView: View {
             VStack(spacing: 0) {
                 // Header
                 HStack {
-                    Spacer().frame(width: 48) // Placeholder for alignment
+                    Spacer()
                     Text("Courses")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(Color(hex: "#111517"))
                         .frame(maxWidth: .infinity)
-                    Button(action: {
-                        // Future search functionality
-                    }) {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Color(hex: "#111517"))
-                            .frame(width: 24, height: 24)
-                    }
+                    Spacer()
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
