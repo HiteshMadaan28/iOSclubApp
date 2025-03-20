@@ -4,10 +4,12 @@
 //
 //  Created by Hitesh Madaan on 13/03/25.
 //
+
 import Foundation
 import Combine
 
 class CoursesViewModel: ObservableObject {
+    
     @Published var courses: [Course] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -25,64 +27,85 @@ class CoursesViewModel: ObservableObject {
     private let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnamxkcGJhbmJ2cW1qemNuZGl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MTg3NjEsImV4cCI6MjA1NDk5NDc2MX0.tLZ_9mQUOxeZAPuSLPml3lR3CNsOm_yDkGmN2y9rSME"
     
     // MARK: - Public API
-    func fetchCourses(forceRefresh: Bool = false) {
-        //1. Return cached data if available and no force refresh is requested
-        if !forceRefresh, let cachedCourses = Self.cachedCourses {
-            print("[CACHE] Returning cached courses: \(cachedCourses.count)")
-            self.courses = cachedCourses
-            return
-        }
-
-        guard let url = URL(string: baseURL) else {
-            self.errorMessage = "Invalid URL."
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("\(apiKey)", forHTTPHeaderField: "apikey")
-
-        isLoading = true
-        errorMessage = nil
-        
-        print("[API] Fetching courses from API...")
-
-        URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let response = output.response as? HTTPURLResponse else {
-                    throw URLError(.badServerResponse)
-                }
-
-                print("[HTTP] Status Code: \(response.statusCode)")
-
-                guard (200...299).contains(response.statusCode) else {
-                    let message = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
-                    throw NSError(domain: "", code: response.statusCode, userInfo: [NSLocalizedDescriptionKey: message])
-                }
-
-                return output.data
+    
+    /// Fetches courses, returns cache if available (unless forced).
+    func fetchCourses(forceRefresh: Bool = false) async {
+        await withCheckedContinuation { continuation in
+            // Check if we should use cached courses
+            if !forceRefresh, let cachedCourses = Self.cachedCourses {
+                self.courses = cachedCourses
+                continuation.resume()
+                return
             }
-            .decode(type: [Course].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                self?.isLoading = false
 
-                switch completion {
-                case .finished:
-                    print("[DEBUG] Successfully fetched courses.")
-                case .failure(let error):
-                    self?.errorMessage = "Error: \(error.localizedDescription)"
-                    print("[ERROR] \(error.localizedDescription)")
-                }
-            } receiveValue: { [weak self] courses in
-                self?.courses = courses
-                
-                //2. Cache the result after successful fetch
-                Self.cachedCourses = courses
-                
-                print("[DEBUG] Courses received: \(courses.count)")
+            guard let url = URL(string: baseURL) else {
+                self.errorMessage = "Invalid URL."
+                continuation.resume()
+                return
             }
-            .store(in: &cancellables)
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("\(apiKey)", forHTTPHeaderField: "apikey")
+
+            isLoading = true
+            errorMessage = nil
+            print("[API] Fetching courses from API...")
+
+            // Perform network request
+            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                guard let self = self else {
+                    continuation.resume()
+                    return
+                }
+
+                if let error = error {
+                    self.errorMessage = "Error: \(error.localizedDescription)"
+                    self.isLoading = false
+                    continuation.resume()
+                    return
+                }
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    self.errorMessage = "Invalid server response."
+                    self.isLoading = false
+                    continuation.resume()
+                    return
+                }
+
+                print("[HTTP] Status Code: \(httpResponse.statusCode)")
+
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    let message = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                    self.errorMessage = "Error: \(message)"
+                    self.isLoading = false
+                    continuation.resume()
+                    return
+                }
+
+                // Decode data
+                guard let data = data else {
+                    self.errorMessage = "No data received."
+                    self.isLoading = false
+                    continuation.resume()
+                    return
+                }
+
+                do {
+                    let courses = try JSONDecoder().decode([Course].self, from: data)
+                    self.courses = courses
+                    Self.cachedCourses = courses
+                    self.isLoading = false
+                    print("[DEBUG] Courses received: \(courses.count)")
+                } catch {
+                    self.errorMessage = "Error: \(error.localizedDescription)"
+                    self.isLoading = false
+                }
+
+                continuation.resume()
+            }.resume()
+        }
     }
+
 }

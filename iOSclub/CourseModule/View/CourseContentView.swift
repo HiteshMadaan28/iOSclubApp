@@ -15,7 +15,7 @@ struct CourseContentView: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack(spacing: 0) {
                 // Header
                 HStack {
@@ -79,13 +79,17 @@ struct CourseContentView: View {
                 }
                 .refreshable {
                     print("Manual refresh triggered!")
-                    viewModel.fetchCourses(forceRefresh: true)
+                    Task {
+                        await viewModel.fetchCourses(forceRefresh: true)
+                    }
                 }
             }
             .background(Color.white.edgesIgnoringSafeArea(.all))
             .onAppear {
                 print("OnAppear triggered!")
-                viewModel.fetchCourses(forceRefresh: false)
+                Task {
+                    await viewModel.fetchCourses(forceRefresh: false)
+                }
             }
         }
     }
@@ -102,6 +106,7 @@ struct CourseContentView: View {
         }
     }
 }
+
 
 
 struct Course_Card: View {
