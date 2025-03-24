@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7BC5AF8FEE3D5AF53331F658 /* Pods_iOSclub_iOSclubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3D3A914B1BC3FDE88C375 /* Pods_iOSclub_iOSclubUITests.framework */; };
+		8BD8B92B9F9AC8CF3A03596F /* Pods_iOSclub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7394A63AED486AC947D331FA /* Pods_iOSclub.framework */; };
+		E1CC8FED2D91DBA700336638 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = E1CC8FEC2D91DBA700336638 /* GoogleSignIn */; };
+		E1CC8FEF2D91DBEC00336638 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = E1CC8FEE2D91DBEC00336638 /* Supabase */; };
+		ECC564BAADA1366BB11C5075 /* Pods_iOSclubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B5141ED445827C16BAFB94 /* Pods_iOSclubTests.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E128D7AE2D41F8E000D4D559 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,9 +32,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02E23717E2A4CACA10DC6D71 /* Pods-iOSclub-iOSclubUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclub-iOSclubUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOSclub-iOSclubUITests/Pods-iOSclub-iOSclubUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0F2F9602572344A7E8523B23 /* Pods-iOSclub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclub.debug.xcconfig"; path = "Target Support Files/Pods-iOSclub/Pods-iOSclub.debug.xcconfig"; sourceTree = "<group>"; };
+		1DF3D3A914B1BC3FDE88C375 /* Pods_iOSclub_iOSclubUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSclub_iOSclubUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BF0FEA4824042DE30FDB66E /* Pods-iOSclub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclub.release.xcconfig"; path = "Target Support Files/Pods-iOSclub/Pods-iOSclub.release.xcconfig"; sourceTree = "<group>"; };
+		7394A63AED486AC947D331FA /* Pods_iOSclub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSclub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75E88A5A7E9A126BC80AF6AF /* Pods-iOSclubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclubTests.debug.xcconfig"; path = "Target Support Files/Pods-iOSclubTests/Pods-iOSclubTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CB811667634A2375D6A2637F /* Pods-iOSclubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclubTests.release.xcconfig"; path = "Target Support Files/Pods-iOSclubTests/Pods-iOSclubTests.release.xcconfig"; sourceTree = "<group>"; };
 		E128D79D2D41F8DD00D4D559 /* iOSclub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSclub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E128D7AD2D41F8E000D4D559 /* iOSclubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSclubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E128D7B72D41F8E000D4D559 /* iOSclubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSclubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5B5141ED445827C16BAFB94 /* Pods_iOSclubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSclubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15FA5C1EF9DB3CB717A5CB8 /* Pods-iOSclub-iOSclubUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSclub-iOSclubUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSclub-iOSclubUITests/Pods-iOSclub-iOSclubUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +69,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD8B92B9F9AC8CF3A03596F /* Pods_iOSclub.framework in Frameworks */,
+				E1CC8FED2D91DBA700336638 /* GoogleSignIn in Frameworks */,
+				E1CC8FEF2D91DBEC00336638 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC564BAADA1366BB11C5075 /* Pods_iOSclubTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,12 +87,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BC5AF8FEE3D5AF53331F658 /* Pods_iOSclub_iOSclubUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B72D029F124AB76BFAE4550 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7394A63AED486AC947D331FA /* Pods_iOSclub.framework */,
+				1DF3D3A914B1BC3FDE88C375 /* Pods_iOSclub_iOSclubUITests.framework */,
+				E5B5141ED445827C16BAFB94 /* Pods_iOSclubTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E128D7942D41F8DD00D4D559 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +111,8 @@
 				E128D7B02D41F8E000D4D559 /* iOSclubTests */,
 				E128D7BA2D41F8E000D4D559 /* iOSclubUITests */,
 				E128D79E2D41F8DD00D4D559 /* Products */,
+				F043464165CA68FEFEA1529F /* Pods */,
+				9B72D029F124AB76BFAE4550 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +126,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F043464165CA68FEFEA1529F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0F2F9602572344A7E8523B23 /* Pods-iOSclub.debug.xcconfig */,
+				2BF0FEA4824042DE30FDB66E /* Pods-iOSclub.release.xcconfig */,
+				02E23717E2A4CACA10DC6D71 /* Pods-iOSclub-iOSclubUITests.debug.xcconfig */,
+				F15FA5C1EF9DB3CB717A5CB8 /* Pods-iOSclub-iOSclubUITests.release.xcconfig */,
+				75E88A5A7E9A126BC80AF6AF /* Pods-iOSclubTests.debug.xcconfig */,
+				CB811667634A2375D6A2637F /* Pods-iOSclubTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -99,6 +146,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E128D7C12D41F8E000D4D559 /* Build configuration list for PBXNativeTarget "iOSclub" */;
 			buildPhases = (
+				37DD8D4E3C3452F4FF9F64EB /* [CP] Check Pods Manifest.lock */,
 				E128D7992D41F8DD00D4D559 /* Sources */,
 				E128D79A2D41F8DD00D4D559 /* Frameworks */,
 				E128D79B2D41F8DD00D4D559 /* Resources */,
@@ -111,8 +159,6 @@
 				E128D79F2D41F8DD00D4D559 /* iOSclub */,
 			);
 			name = iOSclub;
-			packageProductDependencies = (
-			);
 			productName = iOSclub;
 			productReference = E128D79D2D41F8DD00D4D559 /* iOSclub.app */;
 			productType = "com.apple.product-type.application";
@@ -121,6 +167,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E128D7C42D41F8E000D4D559 /* Build configuration list for PBXNativeTarget "iOSclubTests" */;
 			buildPhases = (
+				1E2A50884B6D1B3409D11A6D /* [CP] Check Pods Manifest.lock */,
 				E128D7A92D41F8E000D4D559 /* Sources */,
 				E128D7AA2D41F8E000D4D559 /* Frameworks */,
 				E128D7AB2D41F8E000D4D559 /* Resources */,
@@ -134,8 +181,6 @@
 				E128D7B02D41F8E000D4D559 /* iOSclubTests */,
 			);
 			name = iOSclubTests;
-			packageProductDependencies = (
-			);
 			productName = iOSclubTests;
 			productReference = E128D7AD2D41F8E000D4D559 /* iOSclubTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -144,6 +189,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E128D7C72D41F8E000D4D559 /* Build configuration list for PBXNativeTarget "iOSclubUITests" */;
 			buildPhases = (
+				BBD917D2E84B6734971D2F78 /* [CP] Check Pods Manifest.lock */,
 				E128D7B32D41F8E000D4D559 /* Sources */,
 				E128D7B42D41F8E000D4D559 /* Frameworks */,
 				E128D7B52D41F8E000D4D559 /* Resources */,
@@ -157,8 +203,6 @@
 				E128D7BA2D41F8E000D4D559 /* iOSclubUITests */,
 			);
 			name = iOSclubUITests;
-			packageProductDependencies = (
-			);
 			productName = iOSclubUITests;
 			productReference = E128D7B72D41F8E000D4D559 /* iOSclubUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -195,6 +239,10 @@
 			);
 			mainGroup = E128D7942D41F8DD00D4D559;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E1219EB62D91D214005AE507 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				E1AD392F2D91D44E00DD6512 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E128D79E2D41F8DD00D4D559 /* Products */;
 			projectDirPath = "";
@@ -230,6 +278,75 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1E2A50884B6D1B3409D11A6D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSclubTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		37DD8D4E3C3452F4FF9F64EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSclub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBD917D2E84B6734971D2F78 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSclub-iOSclubUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E128D7992D41F8DD00D4D559 /* Sources */ = {
@@ -390,12 +507,15 @@
 		};
 		E128D7C22D41F8E000D4D559 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F2F9602572344A7E8523B23 /* Pods-iOSclub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOSclub/iOSclub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSclub/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -419,12 +539,15 @@
 		};
 		E128D7C32D41F8E000D4D559 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BF0FEA4824042DE30FDB66E /* Pods-iOSclub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOSclub/iOSclub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSclub/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -448,6 +571,7 @@
 		};
 		E128D7C52D41F8E000D4D559 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 75E88A5A7E9A126BC80AF6AF /* Pods-iOSclubTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -466,6 +590,7 @@
 		};
 		E128D7C62D41F8E000D4D559 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB811667634A2375D6A2637F /* Pods-iOSclubTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -484,6 +609,7 @@
 		};
 		E128D7C82D41F8E000D4D559 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02E23717E2A4CACA10DC6D71 /* Pods-iOSclub-iOSclubUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -500,6 +626,7 @@
 		};
 		E128D7C92D41F8E000D4D559 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F15FA5C1EF9DB3CB717A5CB8 /* Pods-iOSclub-iOSclubUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -554,6 +681,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1219EB62D91D214005AE507 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+		E1AD392F2D91D44E00DD6512 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1CC8FEC2D91DBA700336638 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1AD392F2D91D44E00DD6512 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		E1CC8FEE2D91DBEC00336638 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1219EB62D91D214005AE507 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E128D7952D41F8DD00D4D559 /* Project object */;
 }

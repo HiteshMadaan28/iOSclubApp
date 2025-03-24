@@ -1,0 +1,6 @@
+framework module Pods_iOSclub_iOSclubUITests {
+  umbrella header "Pods-iOSclub-iOSclubUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
