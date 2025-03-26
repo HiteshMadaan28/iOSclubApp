@@ -11,15 +11,10 @@ import AuthenticationServices
 struct LandingView: View {
     
     @StateObject private var viewModel = AuthViewModel()
-    
     @State private var currentIndex = 0
-    let images = [
-        "courses",
-        "connections",
-        "jobs",
-        "news"
-    ]
+    @State private var timer: Timer?
 
+    let images = ["courses", "connections", "jobs", "news"]
     let descriptions = [
         "Learn new skills and grow",
         "Build your network and connect",
@@ -27,19 +22,15 @@ struct LandingView: View {
         "Stay updated with latest news"
     ]
 
-    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
                 
-                // App Name at Top Left
                 Text("iOS-Club")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding()
-
                 
-                // Carousel View
                 TabView(selection: $currentIndex) {
                     ForEach(0..<images.count, id: \.self) { index in
                         VStack {
@@ -47,7 +38,6 @@ struct LandingView: View {
                                 .resizable()
                                 .cornerRadius(20)
                                 .scaledToFit()
-                               
                             
                             Text(descriptions[index])
                                 .font(.headline)
@@ -57,12 +47,8 @@ struct LandingView: View {
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .frame(maxHeight: 300)
-                .onAppear {
-                    startAutoScroll()
-                }
-                .padding(.top,40)
+                .padding(.top, 40)
                 
-                // Circle Indicators
                 HStack(spacing: 10) {
                     Spacer()
                     ForEach(0..<images.count, id: \.self) { index in
@@ -77,15 +63,14 @@ struct LandingView: View {
                     Spacer()
                 }
                 .padding(.top, 15)
-                .padding(.bottom,15)
+                .padding(.bottom, 15)
                 
-                // Text with Links
-                VStack{
+                VStack {
                     Text("By clicking Agree & Join or Continue, you agree to iOS club's ")
                         .font(.footnote)
                         .foregroundColor(.gray)
                     +
-                    Text("User Agreement,Privacy Policy")
+                    Text("User Agreement, Privacy Policy")
                         .font(.footnote)
                         .foregroundColor(.blue)
                     +
@@ -97,15 +82,11 @@ struct LandingView: View {
                         .font(.footnote)
                         .foregroundColor(.blue)
                 }
-                .padding([.horizontal,.vertical])
-                .padding([.leading, .trailing],16)
+                .padding(.horizontal)
+                .padding([.leading, .trailing], 16)
 
-                
-                // Buttons
                 VStack(spacing: 15) {
-                    Button(action: {
-                        // Navigate to Signup Page
-                    }) {
+                    Button(action: {}) {
                         Text("Agree and Join")
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity)
@@ -120,15 +101,14 @@ struct LandingView: View {
                     } onCompletion: { result in
                         viewModel.handleAppleSignIn()
                     }
-                    .frame(height: 50) // Improved height for better alignment
-                    .signInWithAppleButtonStyle(.white) // Use white style for better visual contrast
+                    .frame(height: 50)
+                    .signInWithAppleButtonStyle(.white)
                     .cornerRadius(12)
                     .overlay(
                         RoundedRectangle(cornerRadius: 28)
-                            .stroke(Color.gray.opacity(0.6), lineWidth: 1) // Optional border for a clean look
+                            .stroke(Color.gray.opacity(0.6), lineWidth: 1)
                     )
                     
-                    // Navigation to LoginView when "Sign In" text is tapped
                     NavigationLink(destination: LoginView()) {
                         Text("Sign In")
                             .font(.headline)
@@ -140,19 +120,31 @@ struct LandingView: View {
                 
                 Spacer()
             }
+            .onAppear {
+                startAutoScroll()
+            }
+            .onDisappear {
+                stopAutoScroll()
+            }
         }
     }
     
+    // Timer-based auto-scroll function
     func startAutoScroll() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        stopAutoScroll() // Ensure only one timer exists
+        timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { _ in
             withAnimation(.easeInOut(duration: 0.5)) {
                 currentIndex = (currentIndex + 1) % images.count
             }
-            startAutoScroll()
         }
     }
-
+    
+    func stopAutoScroll() {
+        timer?.invalidate()
+        timer = nil
+    }
 }
+
 
 struct LandingView_Previews: PreviewProvider {
     static var previews: some View {
