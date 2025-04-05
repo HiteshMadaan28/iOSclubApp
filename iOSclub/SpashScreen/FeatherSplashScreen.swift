@@ -15,8 +15,8 @@ struct SplashScreen: View {
     
     var body: some View {
         if isActive {
-//            coordinator.start()
-            LandingView()
+            coordinator.start()
+//            LandingView()
         } else {
             ZStack {
                 Color.white.ignoresSafeArea() // Background color

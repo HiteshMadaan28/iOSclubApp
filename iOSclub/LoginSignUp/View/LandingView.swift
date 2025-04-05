@@ -97,9 +97,43 @@ struct LandingView: View {
                     }
                     
                     SignInWithAppleButton(.signIn) { request in
-                        request.requestedScopes = [.fullName, .email]
+                        request.requestedScopes = [.email, .fullName]
                     } onCompletion: { result in
-                        viewModel.handleAppleSignIn()
+                        switch result {
+                        case .success(let auth):
+                            switch auth.credential {
+                            case let credential as ASAuthorizationAppleIDCredential:
+                                
+                                let appleID = credential.user
+                                let email = credential.email ?? "No Email Provided" // Fallback if it's nil
+                                let firstName = credential.fullName?.givenName ?? ""
+                                let lastName = credential.fullName?.familyName ?? ""
+                                
+                                print("✅ Apple ID: \(appleID)")
+                                print("📧 Email: \(email)")
+                                print("👤 Name: \(firstName) \(lastName)")
+
+                                if let identityTokenData = credential.identityToken,
+                                   let identityTokenString = String(data: identityTokenData, encoding: .utf8) {
+                                    
+                                    // 🔥 Call Supabase Authentication
+                                    viewModel.signInWithSupabase(
+                                        identityToken: identityTokenString,
+                                        appleID: appleID,
+                                        email: email,
+                                        firstName: firstName,
+                                        lastName: lastName
+                                    )
+                                } else {
+                                    print("❌ Failed to retrieve identity token")
+                                }
+
+                            default:
+                                break
+                            }
+                        case .failure(let error):
+                            print("❌ Apple Sign-In Failed: \(error.localizedDescription)")
+                        }
                     }
                     .frame(height: 50)
                     .signInWithAppleButtonStyle(.white)

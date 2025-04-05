@@ -25,6 +25,9 @@ struct CustomTabView: View {
                 case .news:
                     NewsContentView()
                         .id(refreshKey) // Apply the unique key to force refresh
+                case .jobs:
+                    JobsView()
+                        .id(refreshKey) 
                 case .socialMedia:
                     SocialMediaHomeContentView()
                         .id(refreshKey) // Apply the unique key to force refresh

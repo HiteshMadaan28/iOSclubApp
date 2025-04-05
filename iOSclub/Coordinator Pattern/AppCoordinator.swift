@@ -18,6 +18,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
         case home = "house"
         case courses = "folder"
         case news = "newspaper"
+        case jobs = "latch.2.case"
         case socialMedia = "person.3"
         
         var title: String {
@@ -25,6 +26,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
             case .home: return "Home"
             case .courses: return "Courses"
             case .news: return "News"
+            case .jobs: return "jobs"
             case .socialMedia: return "Connect"
             }
         }
@@ -34,6 +36,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
             case .home: return "house.fill"
             case .courses: return "folder.fill"
             case .news: return "newspaper.fill"
+            case .jobs: return "latch.2.case"
             case .socialMedia: return "person.3.fill"
             }
         }
