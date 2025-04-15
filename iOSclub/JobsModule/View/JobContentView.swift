@@ -15,7 +15,7 @@ struct JobContentView: View {
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()
-
+            
             VStack(spacing: 0) {
                 // Top Menu
                 HStack {
@@ -63,7 +63,7 @@ struct JobContentView: View {
                                         .cornerRadius(20)
                                         .shadow(radius: 8)
                                         .offset(x: offset(for: index),
-                                                y: index == viewModel.currentIndex ? dragOffset.height : CGFloat(index - viewModel.currentIndex) * 8)
+                                                y: index == viewModel.currentIndex ? dragOffset.height : CGFloat(index - viewModel.currentIndex))
                                         .scaleEffect(index == viewModel.currentIndex ? 1.0 : 0.95)
                                         .zIndex(Double(viewModel.jobs.count - index))
                                         .gesture(index == viewModel.currentIndex ?

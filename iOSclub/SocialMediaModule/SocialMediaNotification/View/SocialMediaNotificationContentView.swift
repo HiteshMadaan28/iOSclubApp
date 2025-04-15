@@ -9,7 +9,21 @@ import SwiftUI
 
 struct SocialMediaNotificationContentView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            HStack(spacing:0){
+                Spacer()
+               
+                Text("Notifications")
+                    .font(.custom("Inter", size:  18).bold())
+                
+                Spacer()
+                
+                Image("Search")
+                    .padding(.trailing,18)
+                
+                
+            }
+        }
     }
 }
 
