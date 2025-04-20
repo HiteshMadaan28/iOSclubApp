@@ -13,6 +13,8 @@ struct SocialMediaProfileView: View {
     
     @State private var selectedTab: Tab = .posts
     @State private var isSearchPresented = false  // New state variable to present the search view
+    @ObservedObject var authViewModel = AuthViewModel.shared // Use shared instance of AuthViewModel
+
     
     enum Tab {
         case posts
@@ -20,8 +22,8 @@ struct SocialMediaProfileView: View {
     }
     
     var body: some View {
-        NavigationStack{
-            // Profile Header View (keeping as-is)
+        NavigationStack {
+            // Profile Header View
             HStack(spacing: 0) {
                 Button {
                     dismiss()
@@ -31,13 +33,6 @@ struct SocialMediaProfileView: View {
                         .padding(.leading, 14)
                 }
 
-                
-                Spacer()
-                
-                Text("Katie Lee")
-                    .foregroundStyle(Color(hex: "323842"))
-                    .font(.custom("Inter", size: 18).bold())
-                
                 Spacer()
                 
                 // Search icon now triggers the sheet presentation
@@ -69,17 +64,23 @@ struct SocialMediaProfileView: View {
                     .padding(.top, 12)
                     .padding(.bottom, 80)
                     
-                    // User Info
-                    Text("Jena")
-                        .font(.custom("Archivo", size: 20).bold())
-                        .padding(.top, 18)
-                    
-                    Text("Photographer, travelholic, food love and iOS Dev")
-                        .font(.custom("Inter", size: 16))
-                        .foregroundStyle(Color(hex: "9095A0"))
-                        .padding(.top, 10)
-                        .padding([.leading, .trailing], 70)
-                        .multilineTextAlignment(.center)
+                    // Displaying current user info from AuthViewModel
+                    if let currentUser = authViewModel.currentUser {
+                        Text(currentUser.username)
+                            .font(.custom("Archivo", size: 20).bold())
+                            .padding(.top, 18)
+                        
+                        Text("Photographer, travelholic, food love and iOS Dev")
+                            .font(.custom("Inter", size: 16))
+                            .foregroundStyle(Color(hex: "9095A0"))
+                            .padding(.top, 10)
+                            .padding([.leading, .trailing], 70)
+                            .multilineTextAlignment(.center)
+                    } else {
+                        Text("Loading user data...")
+                            .font(.custom("Archivo", size: 20).bold())
+                            .padding(.top, 18)
+                    }
                     
                     // Follow & Message Buttons (keeping as-is)
                     HStack(spacing: 0) {
@@ -201,17 +202,19 @@ struct SocialMediaProfileView: View {
                     .presentationCornerRadius(21)
                     .padding(.top)
                     .ignoresSafeArea()
-                
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            authViewModel.fetchAllUsers() // Fetch all users when the view appears
+        }
     }
 }
-
 
 #Preview {
     SocialMediaProfileView()
 }
+
 
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {

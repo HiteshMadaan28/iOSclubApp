@@ -9,14 +9,22 @@ import SwiftUI
 
 struct SplashScreen: View {
     @StateObject private var coordinator = AppCoordinator()
+    @StateObject private var authViewModel = AuthViewModel.shared // Use shared instance
     @State private var isActive = false // For navigation to the main screen
     @State private var gradientFill: CGFloat = 0 // Gradient progress
     
     
     var body: some View {
         if isActive {
-            coordinator.start()
-//            LandingView()
+            if authViewModel.isSignedIn {
+               let _ =  print("User is signed in: \(authViewModel.currentUser?.username ?? "Unknown")") // Debug print
+                coordinator.start()
+                    .environmentObject(authViewModel)
+            } else {
+               let _ = print("User is not signed in.") // Debug print
+                LandingView()
+                    .environmentObject(authViewModel)
+            }
         } else {
             ZStack {
                 Color.white.ignoresSafeArea() // Background color

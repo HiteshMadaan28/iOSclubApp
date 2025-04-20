@@ -10,7 +10,6 @@ import AuthenticationServices
 
 struct LandingView: View {
     
-    @StateObject private var viewModel = AuthViewModel()
     @State private var currentIndex = 0
     @State private var timer: Timer?
 
@@ -96,52 +95,50 @@ struct LandingView: View {
                             .cornerRadius(28)
                     }
                     
-                    SignInWithAppleButton(.signIn) { request in
-                        request.requestedScopes = [.email, .fullName]
-                    } onCompletion: { result in
-                        switch result {
-                        case .success(let auth):
-                            switch auth.credential {
-                            case let credential as ASAuthorizationAppleIDCredential:
-                                
-                                let appleID = credential.user
-                                let email = credential.email ?? "No Email Provided" // Fallback if it's nil
-                                let firstName = credential.fullName?.givenName ?? ""
-                                let lastName = credential.fullName?.familyName ?? ""
-                                
-                                print("✅ Apple ID: \(appleID)")
-                                print("📧 Email: \(email)")
-                                print("👤 Name: \(firstName) \(lastName)")
+//                    SignInWithAppleButton(.signIn) { request in
+//                        request.requestedScopes = [.email, .fullName]
+//                    } onCompletion: { result in
+//                        switch result {
+//                        case .success(let authResults):
+//                            switch authResults.credential {
+//                            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+//                                guard let token = appleIDCredential.identityToken,
+//                                      let idTokenString = String(data: token, encoding: .utf8) else {
+//                                    print("❌ Unable to fetch identity token")
+//                                    return
+//                                }
+//
+//                                let credential = OAuthProvider.credential(
+//                                    withProviderID: "apple.com",
+//                                    idToken: idTokenString,
+//                                    rawNonce: nil // Optional: implement nonce if needed
+//                                )
+//
+//                                Auth.auth().signIn(with: credential) { authResult, error in
+//                                    if let error = error {
+//                                        print("❌ Firebase Sign-In Failed: \(error.localizedDescription)")
+//                                        return
+//                                    }
+//
+//                                    if let user = authResult?.user {
+//                                        print("✅ Firebase Sign-In Success")
+//                                        print("👤 UID: \(user.uid)")
+//                                        print("📧 Email: \(user.email ?? "No Email")")
+//
+//                                        // Optional: Save user info to Firestore
+//                                        saveUserToFirestore(user: user, appleIDCredential: appleIDCredential)
+//                                    }
+//                                }
+//
+//                            default:
+//                                break
+//                            }
+//
+//                        case .failure(let error):
+//                            print("❌ Apple Sign-In Failed: \(error.localizedDescription)")
+//                        }
+//                    }
 
-                                if let identityTokenData = credential.identityToken,
-                                   let identityTokenString = String(data: identityTokenData, encoding: .utf8) {
-                                    
-                                    // 🔥 Call Supabase Authentication
-                                    viewModel.signInWithSupabase(
-                                        identityToken: identityTokenString,
-                                        appleID: appleID,
-                                        email: email,
-                                        firstName: firstName,
-                                        lastName: lastName
-                                    )
-                                } else {
-                                    print("❌ Failed to retrieve identity token")
-                                }
-
-                            default:
-                                break
-                            }
-                        case .failure(let error):
-                            print("❌ Apple Sign-In Failed: \(error.localizedDescription)")
-                        }
-                    }
-                    .frame(height: 50)
-                    .signInWithAppleButtonStyle(.white)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 28)
-                            .stroke(Color.gray.opacity(0.6), lineWidth: 1)
-                    )
                     
                     NavigationLink(destination: LoginView()) {
                         Text("Sign In")

@@ -12,48 +12,47 @@ struct CustomTabView: View {
     @State private var refreshKey = UUID() // Add a refresh key to force re-render
 
     var body: some View {
-        ZStack {
-            // MARK: - Main Views
-            Group {
-                switch coordinator.selectedTab {
-                case .home:
-                    DashboardView()
-                        .id(refreshKey) // Apply the unique key to force refresh
-                case .courses:
-                    CourseContentView()
-                        .id(refreshKey) // Apply the unique key to force refresh
-                case .news:
-                    NewsContentView()
-                        .id(refreshKey) // Apply the unique key to force refresh
-                case .jobs:
-                    JobContentView()
-                        .id(refreshKey)
-                case .socialMedia:
-                    SocialMediaHomeContentView()
-                        .id(refreshKey) // Apply the unique key to force refresh
+        NavigationStack{
+            ZStack {
+                // MARK: - Main Views
+                Group {
+                    switch coordinator.selectedTab {
+                    case .home:
+                        SocialMediaHomeContentView()
+                            .id(refreshKey) // Apply the unique key to force refresh
+                    case .courses:
+                        CourseContentView()
+                            .id(refreshKey) // Apply the unique key to force refresh
+                    case .news:
+                        NewsContentView()
+                            .id(refreshKey) // Apply the unique key to force refresh
+                    case .jobs:
+                        JobContentView()
+                            .id(refreshKey)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+
+                // MARK: - Custom Floating Tab Bar
+                VStack {
+                    Spacer()
+                    FloatingTabBar(
+                        selectedTab: coordinator.selectedTab,
+                        tabs: AppCoordinator.Tab.allCases,
+                        onTabSelected: { tab in
+                            withAnimation(.spring()) {
+                                coordinator.selectTab(tab)
+                                // Update the refresh key to force re-render
+                                refreshKey = UUID()
+                            }
+                        }
+                    )
+                    .padding(.bottom, 20)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-
-            // MARK: - Custom Floating Tab Bar
-            VStack {
-                Spacer()
-                FloatingTabBar(
-                    selectedTab: coordinator.selectedTab,
-                    tabs: AppCoordinator.Tab.allCases,
-                    onTabSelected: { tab in
-                        withAnimation(.spring()) {
-                            coordinator.selectTab(tab)
-                            // Update the refresh key to force re-render
-                            refreshKey = UUID()
-                        }
-                    }
-                )
-                .padding(.bottom, 20)
-            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
@@ -96,7 +95,7 @@ struct TabBarItemView: View {
             onTap()
         }) {
             VStack(spacing: 6) {
-                Image(systemName: isSelected ? tab.selectedIcon : tab.rawValue)
+                Image(systemName: isSelected ? tab.selectedIcon : tab.icon)
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(isSelected ? Color(hex: "#007AFF") : .gray)
                     .scaleEffect(isSelected ? 1.2 : 1.0)

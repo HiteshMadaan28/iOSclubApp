@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SocialMediaHomeHeaderView: View {
+    
     var body: some View {
         HStack(spacing:0){
             NavigationLink(destination : SocialMediaProfileView()){

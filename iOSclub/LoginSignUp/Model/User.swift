@@ -8,14 +8,8 @@
 import Foundation
 
 struct User: Identifiable {
-    let id: String
-    let name: String
+    let id: String        // Firebase UID
     let email: String
-    let provider: AuthProvider
-    
-    enum AuthProvider {
-        case email
-        case apple
-        case google
-    }
+    let username: String
 }
+
