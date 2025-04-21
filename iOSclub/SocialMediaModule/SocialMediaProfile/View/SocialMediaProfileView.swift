@@ -101,25 +101,29 @@ struct SocialMediaProfileView: View {
                                 .stroke(Color(hex: "7F55E0"), lineWidth: 1)
                         )
                         
-                        HStack(spacing: 0) {
-                            Spacer()
-                            
-                            Image("Chat circle dots")
-                            Text("Message")
-                                .font(.custom("Inter", size: 14))
-                                .foregroundStyle(Color.white)
-                                .padding(.leading, 6)
-                            
-                            Spacer()
+                        Button(action: {
+                            AuthViewModel.shared.signOut()
+                        }){
+                            HStack(spacing: 0) {
+                                Spacer()
+                                
+                                Image("Chat circle dots")
+                                Text("Logout")
+                                    .font(.custom("Inter", size: 14))
+                                    .foregroundStyle(Color.white)
+                                    .padding(.leading, 6)
+                                
+                                Spacer()
+                            }
+                            .foregroundStyle(Color.white)
+                            .frame(height: 36)
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .fill(Color(hex: "636AE8"))
+                            )
+                            .padding(.leading, 10)
                         }
-                        .foregroundStyle(Color.white)
-                        .frame(height: 36)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(hex: "636AE8"))
-                        )
-                        .padding(.leading, 10)
-                        
+                            
                         HStack(spacing: 0) {
                             Image("More vert")
                                 .padding(10)
