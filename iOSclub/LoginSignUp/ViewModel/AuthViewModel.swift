@@ -36,25 +36,46 @@ class AuthViewModel: ObservableObject {
                 self.errorMessage = "Signup error: \(error.localizedDescription)"
                 return
             }
-            
+
             guard let user = result?.user else { return }
             
+            // Create user data
             let userData: [String: Any] = [
                 "email": self.email,
                 "username": self.username,
-                "profilePhotoURL": "",
+                "profilePhotoURL": "",  // Set default or empty
+                "bannerImageURL": "",   // Set default or empty
                 "bio": "",
                 "dateOfBirth": "",
-                "createdAt": Timestamp(date: Date()),
-                "postsCount": 0,
+                "location": "",
+                "phoneNumber": "",
+                "gender": "",
+                "websiteURL": "",
+                "socialMediaLinks": [
+                    "twitter": "",
+                    "instagram": ""
+                ],
+                "joinDate": Timestamp(date: Date()),
+                "lastActive": Timestamp(date: Date()),
+                "status": "",
                 "followersCount": 0,
                 "followingCount": 0,
-                "followers": [],
-                "following": [],
-                "isActive": true,
-                "lastLogin": Timestamp(date: Date())
+                "postsCount": 0,
+                "likesCount": 0,
+                "commentsCount": 0,
+                "interests": [],
+                "privacySettings": [
+                    "profileVisibility": "public",
+                    "postVisibility": "friends"
+                ],
+                "badges": [],
+                "deviceInfo": [
+                    "deviceModel": "Unknown",
+                    "os": "Unknown"
+                ]
             ]
             
+            // Save user data to Firestore
             self.db.collection("users").document(user.uid).setData(userData) { err in
                 if let err = err {
                     self.errorMessage = "Firestore error: \(err.localizedDescription)"
@@ -67,6 +88,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
+
     
     func signIn() {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in

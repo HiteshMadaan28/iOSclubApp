@@ -10,197 +10,187 @@ import SwiftUI
 struct SocialMediaProfileView: View {
     
     @Environment(\.dismiss) private var dismiss
-    
     @State private var selectedTab: Tab = .posts
-    @State private var isSearchPresented = false  // New state variable to present the search view
-    @ObservedObject var authViewModel = AuthViewModel.shared // Use shared instance of AuthViewModel
+    @State private var isSearchPresented = false
 
+    @ObservedObject var authViewModel = AuthViewModel.shared
+    var viewedUser: User? // User whose profile is being viewed
     
     enum Tab {
         case posts
         case photos
     }
+
+    private var isCurrentUser: Bool {
+        guard let viewedUser = viewedUser else { return true }
+        return viewedUser.id == authViewModel.currentUser?.id
+    }
     
     var body: some View {
         NavigationStack {
-            // Profile Header View
             HStack(spacing: 0) {
-                Button {
-                    dismiss()
-                } label: {
+                Button { dismiss() } label: {
                     Image("Chevron left")
                         .frame(width: 24, height: 24)
                         .padding(.leading, 14)
                 }
-
-                Spacer()
                 
-                // Search icon now triggers the sheet presentation
-                Image("Search")
-                    .padding(.trailing, 14)
-                    .onTapGesture {
-                        isSearchPresented.toggle()  // Toggle search presentation
-                    }
+                Spacer()
+
+                if isCurrentUser {
+                    Image("Search")
+                        .padding(.trailing, 14)
+                        .onTapGesture {
+                            isSearchPresented.toggle()
+                        }
+                }
             }
-            
+
             ScrollView {
                 VStack(spacing: 0) {
-                    
-                    // Banner and Avatar (keeping as-is)
+                    // Banner and Avatar
                     ZStack {
                         Image("DemoBanner")
                             .resizable()
                             .cornerRadius(16, corners: [.topLeft, .topRight])
                             .frame(height: 150)
-                            .padding([.leading, .trailing], 24)
-                        
+                            .padding(.horizontal, 24)
+
                         VStack(spacing: 0) {
                             Image("Avatar")
+                                .resizable()
                                 .frame(width: 160, height: 160)
-                                .cornerRadius(100)
+                                .clipShape(Circle())
                         }
                         .offset(y: 80)
                     }
                     .padding(.top, 12)
                     .padding(.bottom, 80)
                     
-                    // Displaying current user info from AuthViewModel
-                    if let currentUser = authViewModel.currentUser {
-                        Text(currentUser.username)
+                    // Profile Info
+                    let userToShow = isCurrentUser ? authViewModel.currentUser : viewedUser
+                    
+                    if let user = userToShow {
+                        Text(user.username)
                             .font(.custom("Archivo", size: 20).bold())
                             .padding(.top, 18)
                         
-                        Text("Photographer, travelholic, food love and iOS Dev")
+                        // You can later bind real bio data from Firestore
+                        Text("Photographer, travelholic, food lover and iOS Dev")
                             .font(.custom("Inter", size: 16))
                             .foregroundStyle(Color(hex: "9095A0"))
                             .padding(.top, 10)
-                            .padding([.leading, .trailing], 70)
+                            .padding(.horizontal, 70)
                             .multilineTextAlignment(.center)
                     } else {
                         Text("Loading user data...")
                             .font(.custom("Archivo", size: 20).bold())
                             .padding(.top, 18)
                     }
-                    
-                    // Follow & Message Buttons (keeping as-is)
-                    HStack(spacing: 0) {
+
+                    if isCurrentUser {
+                        // Actions for current user
                         HStack(spacing: 0) {
-                            Spacer()
-                            
-                            Image("Check double")
-                            Text("Following")
-                                .font(.custom("Inter", size: 14))
-                                .foregroundStyle(Color(hex: "7F55E0"))
-                                .padding(.leading, 6)
-                            
-                            Spacer()
-                        }
-                        .frame(height: 36)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color(hex: "7F55E0"), lineWidth: 1)
-                        )
-                        
-                        Button(action: {
-                            AuthViewModel.shared.signOut()
-                        }){
                             HStack(spacing: 0) {
                                 Spacer()
-                                
-                                Image("Chat circle dots")
-                                Text("Logout")
+                                Image("Check double")
+                                Text("Following")
                                     .font(.custom("Inter", size: 14))
-                                    .foregroundStyle(Color.white)
+                                    .foregroundStyle(Color(hex: "7F55E0"))
                                     .padding(.leading, 6)
-                                
                                 Spacer()
                             }
-                            .foregroundStyle(Color.white)
                             .frame(height: 36)
                             .background(
                                 RoundedRectangle(cornerRadius: 6)
-                                    .fill(Color(hex: "636AE8"))
+                                    .stroke(Color(hex: "7F55E0"), lineWidth: 1)
+                            )
+                            
+                            Button {
+                                authViewModel.signOut()
+                            } label: {
+                                HStack(spacing: 0) {
+                                    Spacer()
+                                    Image("Chat circle dots")
+                                    Text("Logout")
+                                        .font(.custom("Inter", size: 14))
+                                        .foregroundStyle(.white)
+                                        .padding(.leading, 6)
+                                    Spacer()
+                                }
+                                .frame(height: 36)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .fill(Color(hex: "636AE8"))
+                                )
+                            }
+                            .padding(.leading, 10)
+
+                            HStack {
+                                Image("More vert").padding(10)
+                            }
+                            .frame(height: 36)
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(Color(hex: "9095A0"), lineWidth: 1)
                             )
                             .padding(.leading, 10)
                         }
-                            
+                        .padding(.top, 18)
+                        .padding(.horizontal, 24)
+
+                        Divider().padding(.top, 25)
+
+                        // Tab Section
                         HStack(spacing: 0) {
-                            Image("More vert")
-                                .padding(10)
-                        }
-                        .foregroundStyle(Color.white)
-                        .frame(height: 36)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color(hex: "9095A0"), lineWidth: 1)
-                        )
-                        .padding(.leading, 10)
-                    }
-                    .padding(.top, 18)
-                    .padding([.leading, .trailing], 24)
-                    
-                    // Divider Above Tabs
-                    Divider()
-                        .padding(.top, 25)
-                    
-                    // Tabs Section
-                    HStack(spacing: 0) {
-                        Spacer()
-                        
-                        Button(action: {
-                            selectedTab = .posts
-                        }) {
-                            HStack(spacing: 0) {
-                                Image("PostIcon")
-                                    .renderingMode(.template)
-                                    .foregroundStyle(selectedTab == .posts ? Color(hex: "7F55E0") : Color(hex: "424955"))
-                                
-                                Text("Posts")
-                                    .foregroundStyle(selectedTab == .posts ? Color(hex: "7F55E0") : Color(hex: "424955"))
-                                    .padding(.leading, 10.25)
+                            Spacer()
+                            Button {
+                                selectedTab = .posts
+                            } label: {
+                                HStack(spacing: 0) {
+                                    Image("PostIcon")
+                                        .renderingMode(.template)
+                                        .foregroundStyle(selectedTab == .posts ? Color(hex: "7F55E0") : Color(hex: "424955"))
+                                    Text("Posts")
+                                        .foregroundStyle(selectedTab == .posts ? Color(hex: "7F55E0") : Color(hex: "424955"))
+                                        .padding(.leading, 10.25)
+                                }
                             }
-                            .padding(.leading, 14.25)
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            selectedTab = .photos
-                        }) {
-                            HStack(spacing: 0) {
-                                Image("ImageIcon")
-                                    .renderingMode(.template)
-                                    .foregroundStyle(selectedTab == .photos ? Color(hex: "7F55E0") : Color(hex: "424955"))
-                                
-                                Text("Photos")
-                                    .foregroundStyle(selectedTab == .photos ? Color(hex: "7F55E0") : Color(hex: "424955"))
-                                    .padding(.leading, 10.25)
+                            Spacer()
+                            Button {
+                                selectedTab = .photos
+                            } label: {
+                                HStack(spacing: 0) {
+                                    Image("ImageIcon")
+                                        .renderingMode(.template)
+                                        .foregroundStyle(selectedTab == .photos ? Color(hex: "7F55E0") : Color(hex: "424955"))
+                                    Text("Photos")
+                                        .foregroundStyle(selectedTab == .photos ? Color(hex: "7F55E0") : Color(hex: "424955"))
+                                        .padding(.leading, 10.25)
+                                }
                             }
-                            .padding(.leading, 14.25)
+                            Spacer()
                         }
-                        
-                        Spacer()
-                    }
-                    .frame(height: 56)
-                    
-                    Divider()
-                    
-                    // Content for Tabs
-                    VStack {
-                        if selectedTab == .posts {
-                            PostsSectionView()
-                        } else if selectedTab == .photos {
-                            PhotosSectionView()
+                        .frame(height: 56)
+
+                        Divider()
+
+                        // Tab Content
+                        VStack {
+                            if selectedTab == .posts {
+                                PostsSectionView()
+                            } else {
+                                PhotosSectionView()
+                            }
                         }
+                        .padding(.top, 20)
+                        .padding(.horizontal, 24)
                     }
-                    .padding(.top, 20)
-                    .padding([.leading, .trailing], 24)
-                    
                 }
             }
             .scrollIndicators(.hidden)
             .sheet(isPresented: $isSearchPresented) {
-                SearchProfilesView()  // Present the search view in the sheet
+                SearchProfilesView()
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
                     .presentationCornerRadius(21)
@@ -210,10 +200,11 @@ struct SocialMediaProfileView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            authViewModel.fetchAllUsers() // Fetch all users when the view appears
+            authViewModel.fetchAllUsers()
         }
     }
 }
+
 
 #Preview {
     SocialMediaProfileView()
