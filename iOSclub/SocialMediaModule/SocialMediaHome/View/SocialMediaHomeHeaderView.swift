@@ -29,8 +29,11 @@ struct SocialMediaHomeHeaderView: View {
             
             Spacer()
             
-            Image("Search")
-                .padding([.top,.bottom,.trailing],14)
+            NavigationLink(destination: ChatListView()) {
+                Image(systemName:"ellipsis.message.fill")
+                    .padding([.top,.bottom,.trailing],14)
+            }
+            .foregroundStyle(Color.gray.opacity(0.8))
         }
         
     }

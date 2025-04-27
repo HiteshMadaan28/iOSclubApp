@@ -106,6 +106,7 @@ struct SocialMediaProfileView: View {
                                     .stroke(Color(hex: "7F55E0"), lineWidth: 1)
                             )
                             
+                            
                             Button {
                                 authViewModel.signOut()
                             } label: {
